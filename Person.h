@@ -14,6 +14,7 @@ class Person{
         bool vaccinated;
         double susceptibility;
         HealthStatus health;
+        int days_infected;
     
     public:
         Person(int age, double susceptibility);
@@ -23,6 +24,8 @@ class Person{
         bool isVaccinated() const;
         double getSusceptibility() const;
         void setHealthStatus(HealthStatus value);
+        void incrementDaysInfected();
+        int getDaysInfected() const;
 };
 
 #endif 

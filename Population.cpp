@@ -7,7 +7,7 @@ Population::Population(int populationSize, int initialInfections)
     std::random_device rd; 
     std::mt19937 gen(rd()); 
     std::uniform_int_distribution<int> distr(1, 99); 
-    std::uniform_real_distribution<double> distrib(0.5, 1.5); 
+    std::uniform_real_distribution<double> distrib(0.5, 1); 
 
     int infected = 0;
     
@@ -69,6 +69,10 @@ int Population::getDeceased() const{
 
 int Population::getPopulationSize() const {
     return people.size();
+}
+
+std::vector<Person>& Population::getPeople(){
+    return people;
 }
 
 void Population::display() const {

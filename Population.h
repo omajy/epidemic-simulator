@@ -15,6 +15,7 @@ class Population{
         int getRecovered() const;
         int getDeceased() const;
         int getPopulationSize() const;
+        std::vector<Person>& getPeople();
         void display() const;
 };
 

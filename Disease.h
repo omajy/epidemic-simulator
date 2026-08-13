@@ -6,19 +6,19 @@ class Disease{
     private:
         std::string name;
         double transmission_probability;
-        double recovery_probability;
         double mortality_rate;
+        int infectious_duration;
     
     public:
         Disease(std::string diseaseName,
                 double transmissionProbability,
-                double recoveryProbability, 
+                int infectiousDuration, 
                 double mortalityRate);
         
         std::string getName() const;
         double getTransmissionProbability() const;
-        double getRecoveryProbability() const;
         double getMortalityRate() const;
+        int getInfectiousDuration() const;
 };
 
 #endif 

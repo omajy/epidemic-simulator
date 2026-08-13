@@ -1,9 +1,9 @@
 #include "Disease.h"
 
-Disease::Disease(std::string diseaseName, double transmissionProbability, double recoveryProbability, double mortalityRate)
+Disease::Disease(std::string diseaseName, double transmissionProbability, int infectiousDuration, double mortalityRate)
     : name(diseaseName),
       transmission_probability(transmissionProbability),
-      recovery_probability(recoveryProbability),
+      infectious_duration(infectiousDuration),
       mortality_rate(mortalityRate)
 {
 }
@@ -16,8 +16,8 @@ double Disease::getTransmissionProbability() const{
     return transmission_probability;
 }
 
-double Disease::getRecoveryProbability() const{
-    return recovery_probability;
+int Disease::getInfectiousDuration() const{
+    return infectious_duration;
 }
 
 double Disease::getMortalityRate() const{
