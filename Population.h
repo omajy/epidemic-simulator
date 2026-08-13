@@ -1,12 +1,11 @@
+#include<vector>
+#include "Person.h"
 #ifndef POPULATION_H
 #define POPULATION_H
 
 class Population{
     private:
-        int susceptible;
-        int infected;
-        int recovered;
-        int perished;
+        std::vector<Person> people;
     
     public:
         Population(int populationSize, int initialInfections);
@@ -14,7 +13,9 @@ class Population{
         int getSusceptible() const;
         int getInfected() const;
         int getRecovered() const;
-        int getPerished() const;
+        int getDeceased() const;
+        int getPopulationSize() const;
+        void display() const;
 };
 
 #endif 
