@@ -5,39 +5,43 @@
 
 int main()
 {
-    Population population(100, 5);
+    Population population(50000, 100);
 
     Disease disease(
         "Test Virus",
-        0.08,
-        5,
-        5,
-        0.0
+        0.025,
+        10,
+        60,
+        0.008
     );
 
     Vaccine vaccine(
         "Test Vaccine",
         "Test Virus",
-        0.80,
+        0.75,
         0.90
     );
 
     Simulation simulation(
         population,
         disease,
-        8,
+        12,
         vaccine
     );
 
-    simulation.simulate(10);
+    simulation.simulate(30);
 
-    simulation.vaccinatePopulation(0.25);
-
-    simulation.simulate(10);
-
-    simulation.vaccinatePopulation(0.25);
+    simulation.vaccinatePopulation(0.10);
 
     simulation.simulate(20);
+
+    simulation.vaccinatePopulation(0.15);
+
+    simulation.simulate(20);
+
+    simulation.vaccinatePopulation(0.20);
+
+    simulation.simulate(110);
 
     simulation.exportCSV();
 

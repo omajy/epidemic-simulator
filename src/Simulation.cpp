@@ -12,16 +12,16 @@ Simulation::Simulation(Population population, Disease disease, int dailyContacts
       current_day(0),
       vaccine(vaccine)
       {
-        DailyStats initialStats;
+        DailyStats initial;
 
-        initialStats.day = current_day;
-        initialStats.susceptible = this->population.getSusceptible();
-        initialStats.infected = this->population.getInfected();
-        initialStats.recovered = this->population.getRecovered();
-        initialStats.deceased = this->population.getDeceased();
-        initialStats.vaccinated = this->population.getVaccinated();
+        initial.day = current_day;
+        initial.susceptible = this->population.getSusceptible();
+        initial.infected = this->population.getInfected();
+        initial.recovered = this->population.getRecovered();
+        initial.deceased = this->population.getDeceased();
+        initial.vaccinated = this->population.getVaccinated();
 
-        history.push_back(initialStats);
+        history.push_back(initial);
     }
 
 int Simulation::getCurrentDay(){
@@ -183,6 +183,5 @@ void Simulation::exportCSV() {
              << stats.deceased << ","
              << stats.vaccinated << "\n";
     }
-
     file.close();
 }
