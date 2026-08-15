@@ -17,6 +17,8 @@ class Population{
         int getPopulationSize() const;
         std::vector<Person>& getPeople();
         void display() const;
+        int getUnvaccinated() const;
+        int getVaccinated() const;
 };
 
 #endif 

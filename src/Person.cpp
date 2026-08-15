@@ -5,7 +5,8 @@ Person::Person(int age, double susceptibility)
       vaccinated(false),
       susceptibility(susceptibility),
       health(HealthStatus::Susceptible),
-      days_infected(0)
+      days_infected(0),
+      days_recovered(0)
 {
 }
 
@@ -39,4 +40,24 @@ void Person::incrementDaysInfected() {
 
 int Person::getDaysInfected() const{
     return days_infected;
+}
+
+void Person::resetDaysInfected(){
+    this->days_infected = 0;
+}
+
+void Person::setVaccinated(){
+    vaccinated = true;
+}
+
+void Person::incrementDaysRecovered(){
+    this->days_recovered = days_recovered + 1;
+}
+
+int Person::getDaysRecovered() const{
+    return days_recovered;
+}
+
+void Person::resetDaysRecovered(){
+    this->days_recovered = 0;
 }

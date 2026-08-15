@@ -15,6 +15,7 @@ class Person{
         double susceptibility;
         HealthStatus health;
         int days_infected;
+        int days_recovered;
     
     public:
         Person(int age, double susceptibility);
@@ -26,6 +27,11 @@ class Person{
         void setHealthStatus(HealthStatus value);
         void incrementDaysInfected();
         int getDaysInfected() const;
+        void resetDaysInfected();
+        void setVaccinated();
+        void incrementDaysRecovered();
+        int getDaysRecovered() const;
+        void resetDaysRecovered();
 };
 
 #endif 

@@ -75,6 +75,24 @@ std::vector<Person>& Population::getPeople(){
     return people;
 }
 
+int Population::getUnvaccinated() const
+{
+    int count = 0;
+
+    for (const Person& person : people)
+    {
+        if (!person.isVaccinated())
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
+int Population::getVaccinated() const{
+    return getPopulationSize() - getUnvaccinated();
+}
+
 void Population::display() const {
     
     for (const Person& person : people)

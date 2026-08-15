@@ -2,12 +2,14 @@
 #include "Population.h"
 #include<random>
 #include<iostream>
+#include<algorithm>
 
-Simulation::Simulation(Population population, Disease disease, int dailyContacts)
+Simulation::Simulation(Population population, Disease disease, int dailyContacts, std::optional<Vaccine> vaccine)
     : population(population),
       disease(disease),
       daily_contacts(dailyContacts),
-      current_day(0)
+      current_day(0),
+      vaccine(vaccine)
       {
       }
 
@@ -28,22 +30,39 @@ void Simulation::simulateDay(){
     std::vector<Person*> newlyInfected;
     
     for (Person& person : population.getPeople()){
+        
+        if (person.getHealthState() == HealthStatus::Recovered){
+            person.incrementDaysRecovered();
+
+            if (person.getDaysRecovered() >= disease.getImmunityDuration()){
+                person.resetDaysRecovered();
+                person.setHealthStatus(HealthStatus::Susceptible);
+            }
+        }
 
         if (person.getHealthState() == HealthStatus::Infected){
 
-               person.incrementDaysInfected();
+            person.incrementDaysInfected();
+
+            double mortality_odds = disease.getMortalityRate();
+
+            if (person.isVaccinated() && vaccine.has_value() && vaccine->getTargetDisease() == disease.getName())
+            {
+                mortality_odds *= (1.0 - vaccine->getMortalityReduction());
+            }
 
             if (person.getDaysInfected() > disease.getInfectiousDuration())
             {
                 double roll = probability(gen);
 
-                if (roll < disease.getMortalityRate())
+                if (roll < mortality_odds)
                 {
                     person.setHealthStatus(HealthStatus::Deceased);
                 }
                 else
                 {
                     person.setHealthStatus(HealthStatus::Recovered);
+                    person.resetDaysInfected();
                 }
                 continue;
             }
@@ -61,6 +80,11 @@ void Simulation::simulateDay(){
                 else
                 {
                     double transmission_odds = randomPerson.getSusceptibility() * disease.getTransmissionProbability();
+
+                    if (randomPerson.isVaccinated() && vaccine.has_value() && vaccine->getTargetDisease() == disease.getName())
+                    {
+                        transmission_odds *= (1.0 - vaccine->getInfectionReduction());
+                    }
 
                     double roll = probability(gen);
 
@@ -86,6 +110,31 @@ void Simulation::simulateDay(){
     }
  }
 
+void Simulation::vaccinatePopulation(double percentage)
+{
+    std::random_device rd; 
+    std::mt19937 gen(rd()); 
+
+    auto& people = population.getPeople();
+    std::shuffle(people.begin(), people.end(), gen);
+
+    int vaccination_target =
+        population.getUnvaccinated() * percentage;
+
+    int vaccinated_count = 0;
+    int index = 0;
+
+    while (vaccinated_count < vaccination_target)
+    {
+        if (!people[index].isVaccinated())
+        {
+            people[index].setVaccinated();
+            vaccinated_count++;
+        }
+        index++;
+    }
+}
+
  void Simulation::displayStats() {
     std::cout << "---------------------" << std::endl;
     std::cout << "Day: " << getCurrentDay() << std::endl;
@@ -93,5 +142,6 @@ void Simulation::simulateDay(){
     std::cout << "Infected: " << population.getInfected() << std::endl;
     std::cout << "Recovered: " << population.getRecovered() << std::endl;
     std::cout << "Deceased: " << population.getDeceased() << std::endl;
+    std::cout << "Vaccinated: " << population.getVaccinated() << std::endl;
     std::cout << "---------------------" << std::endl;
 }

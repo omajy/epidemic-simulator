@@ -41,7 +41,7 @@ New infections are applied after the current simulation day has completed, preve
 
 Once an individual's infectious duration has elapsed, a mortality probability determines whether they recover or become deceased.
 
-## Example Output 🧪
+## Example Output 🔬
 
 ```text
 ---------------------
