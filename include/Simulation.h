@@ -6,6 +6,15 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
+struct DailyStats {
+    int day;
+    int susceptible;
+    int infected;
+    int recovered;
+    int deceased;
+    int vaccinated;
+};
+
 class Simulation {
 private:
     int current_day;
@@ -13,6 +22,7 @@ private:
     Disease disease;
     std::optional<Vaccine> vaccine;
     int daily_contacts;
+    std::vector<DailyStats> history;
 
 public:
     Simulation(
@@ -28,6 +38,8 @@ public:
     int getCurrentDay();
     void incrementCurrentDay();
     void vaccinatePopulation(double percentage);
+
+    void exportCSV();
 };
 
 #endif

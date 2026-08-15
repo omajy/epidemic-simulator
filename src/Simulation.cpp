@@ -3,6 +3,7 @@
 #include<random>
 #include<iostream>
 #include<algorithm>
+#include <fstream>
 
 Simulation::Simulation(Population population, Disease disease, int dailyContacts, std::optional<Vaccine> vaccine)
     : population(population),
@@ -11,7 +12,17 @@ Simulation::Simulation(Population population, Disease disease, int dailyContacts
       current_day(0),
       vaccine(vaccine)
       {
-      }
+        DailyStats initialStats;
+
+        initialStats.day = current_day;
+        initialStats.susceptible = this->population.getSusceptible();
+        initialStats.infected = this->population.getInfected();
+        initialStats.recovered = this->population.getRecovered();
+        initialStats.deceased = this->population.getDeceased();
+        initialStats.vaccinated = this->population.getVaccinated();
+
+        history.push_back(initialStats);
+    }
 
 int Simulation::getCurrentDay(){
     return current_day;
@@ -101,6 +112,17 @@ void Simulation::simulateDay(){
             person->setHealthStatus(HealthStatus::Infected);
         }
     incrementCurrentDay();
+
+    DailyStats stats;
+
+    stats.day = current_day;
+    stats.susceptible = population.getSusceptible();
+    stats.infected = population.getInfected();
+    stats.recovered = population.getRecovered();
+    stats.deceased = population.getDeceased();
+    stats.vaccinated = population.getVaccinated();
+
+    history.push_back(stats);
  }
 
  void Simulation::simulate(int days) {
@@ -144,4 +166,23 @@ void Simulation::vaccinatePopulation(double percentage)
     std::cout << "Deceased: " << population.getDeceased() << std::endl;
     std::cout << "Vaccinated: " << population.getVaccinated() << std::endl;
     std::cout << "---------------------" << std::endl;
+}
+
+void Simulation::exportCSV() {
+    
+    std::ofstream file("results/simulation.csv");
+
+    file << "day,susceptible,infected,recovered,deceased,vaccinated\n";
+
+    for (const DailyStats& stats : history)
+    {
+        file << stats.day << ","
+             << stats.susceptible << ","
+             << stats.infected << ","
+             << stats.recovered << ","
+             << stats.deceased << ","
+             << stats.vaccinated << "\n";
+    }
+
+    file.close();
 }

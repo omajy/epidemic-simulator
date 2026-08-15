@@ -39,5 +39,7 @@ int main()
 
     simulation.simulate(20);
 
+    simulation.exportCSV();
+
     return 0;
 }
