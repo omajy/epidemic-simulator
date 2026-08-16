@@ -111,13 +111,13 @@ Vaccinated: 19400
 Compile the C++ simulator using C++17:
 
 ```bash
-c++ -std=c++17 -Iinclude src/*.cpp main.cpp -o epidemic_simulator
+c++ -std=c++17 -Iinclude src/*.cpp main.cpp
 ```
 
 Run the simulation:
 
 ```bash
-./epidemic_simulator
+./a.out
 ```
 
 The simulation results are exported to:
@@ -138,38 +138,3 @@ The generated graph is saved as:
 ```text
 visualisations/epidemic_visualisation.png
 ```
-
-Because the simulation is stochastic, repeated runs using identical population, disease, vaccine, and intervention parameters may produce different epidemic outcomes.
-
-## Project Structure 📁
-
-```text
-epidemic-simulator/
-├── include/
-│   ├── Disease.h
-│   ├── Person.h
-│   ├── Population.h
-│   ├── Simulation.h
-│   └── Vaccine.h
-│
-├── src/
-│   ├── Disease.cpp
-│   ├── Person.cpp
-│   ├── Population.cpp
-│   ├── Simulation.cpp
-│   └── Vaccine.cpp
-│
-├── results/
-│   └── simulation.csv
-│
-├── visualisations/
-│   ├── plot.py
-│   └── epidemic_visualisation.png
-│
-├── main.cpp
-└── README.md
-```
-
-## Disclaimer
-
-This project is intended for educational and simulation purposes. The model simplifies real-world epidemiological processes and should not be used for medical or epidemiological prediction.
